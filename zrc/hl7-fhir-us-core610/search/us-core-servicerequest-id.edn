@@ -1,0 +1,11 @@
+{ns hl7-fhir-us-core610.search.us-core-servicerequest-id,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-servicerequest-id",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-servicerequest-id",
+         :fhir/type "token",
+         :name "_id",
+         :expr {:ServiceRequest {:knife [["id"]],
+                                 :jsonpath ["$.\"id\"[*]"],
+                                 :data-types #{},
+                                 :template :token}}}}

@@ -1,0 +1,9 @@
+{ns hl7-fhir-us-core610.value-set.us-core-survey-codes,
+ import #{zen.fhir},
+ value-set {:zen/tags #{zen.fhir/value-set},
+            :zen/desc "This value set includes screening and assessment panel codes in LOINC (Refer to [Appendix A](https://loinc.org/kb/users-guide/loinc-database-structure/) of LOINC Users' Guide).",
+            :zen.fhir/version "0.6.32",
+            :fhir/code-systems #{{:fhir/url "http://loinc.org",
+                                  :zen.fhir/content :not-present}},
+            :uri "http://hl7.org/fhir/us/core/ValueSet/us-core-survey-codes",
+            :version "6.1.0"}}

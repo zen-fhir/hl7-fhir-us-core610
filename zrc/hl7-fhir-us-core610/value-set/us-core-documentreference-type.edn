@@ -1,0 +1,18 @@
+{ns hl7-fhir-us-core610.value-set.us-core-documentreference-type,
+ import #{zen.fhir},
+ value-set {:zen/tags #{zen.fhir/value-set},
+            :zen/desc "The US Core DocumentReference Type Value Set includes all LOINC  values whose SCALE is DOC in the LOINC database and the HL7 v3 Code System NullFlavor concept 'unknown'",
+            :zen.fhir/version "0.6.32",
+            :fhir/code-systems #{{:fhir/url "http://loinc.org",
+                                  :zen.fhir/content :not-present}
+                                 {:fhir/url "http://terminology.hl7.org/CodeSystem/v3-NullFlavor",
+                                  :zen.fhir/content :bundled}},
+            :uri "http://hl7.org/fhir/us/core/ValueSet/us-core-documentreference-type",
+            :version "6.1.0",
+            :ftr {:module "hl7-fhir-us-core610",
+                  :source-url "https://storage.googleapis.com",
+                  :source-type :cloud-storage,
+                  :ftr-path "ftr",
+                  :tag "init",
+                  :validation-index {:type :nippy,
+                                     :file "index.nippy"}}}}

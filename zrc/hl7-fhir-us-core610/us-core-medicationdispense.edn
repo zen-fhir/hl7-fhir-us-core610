@@ -1,0 +1,87 @@
+{ns hl7-fhir-us-core610.us-core-medicationdispense,
+ import #{hl7-fhir-r4-core.Device
+          hl7-fhir-us-core610.us-core-relatedperson
+          zen.fhir
+          hl7-terminology-r4.value-set.v3-ActPharmacySupplyType
+          us-nlm-vsac.value-set.2.16.840.1.113762.1.4.1010.4
+          hl7-fhir-r4-core.value-set.ucum-common
+          hl7-fhir-r4-core.MedicationDispense
+          hl7-fhir-us-core610.us-core-practitioner
+          hl7-fhir-us-core610.us-core-organization
+          hl7-fhir-us-core610.us-core-medication
+          hl7-fhir-us-core610.us-core-medicationrequest
+          hl7-fhir-us-core610.us-core-practitionerrole
+          hl7-fhir-us-core610.us-core-patient},
+ schema {:zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.MedicationDispense/schema
+                     zen.fhir/Resource},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationdispense",
+         :require #{:subject},
+         :type zen/map,
+         :zen/desc "This profile sets minimum expectations for the MedicationDispense resource to record, search, and fetch the \"state of a medication with regards to dispensing or other activity. (e.g., dispensed, partially dispensed, not dispensed)\" associated with a patient to promote interoperability and adoption through common implementation. It identifies which core elements, extensions, vocabularies, and value sets **SHALL** be present in the resource and constrains the way the elements are used when using this profile. It provides the floor for standards development for specific use cases.",
+         :keys {:whenHandedOver {:fhir/flags #{:MS},
+                                 :zen/desc "(USCDI) When product was given out or mailed"},
+                :type {:fhir/flags #{:MS},
+                       :zen.fhir/value-set {:symbol hl7-terminology-r4.value-set.v3-ActPharmacySupplyType/value-set,
+                                            :strength :extensible},
+                       :zen/desc "(USCDI) Trial fill, partial fill, emergency fill, etc."},
+                :status {:fhir/flags #{:MS},
+                         :zen/desc "(USCDI) preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown"},
+                :dosageInstruction {:type zen/vector,
+                                    :every {:type zen/map,
+                                            :keys {:text {:fhir/flags #{:MS},
+                                                          :zen/desc "(USCDI) Free text dosage instructions e.g. SIG"},
+                                                   :timing {:fhir/flags #{:MS},
+                                                            :zen/desc "(USCDI) When medication should be administered"},
+                                                   :doseAndRate {:type zen/vector,
+                                                                 :every {:type zen/map,
+                                                                         :keys {:dose {:fhir/polymorphic true,
+                                                                                       :type zen/map,
+                                                                                       :exclusive-keys #{#{:Range
+                                                                                                           :Quantity}},
+                                                                                       :fhir/flags #{:MS},
+                                                                                       :zen.fhir/value-set {:symbol hl7-fhir-r4-core.value-set.ucum-common/value-set,
+                                                                                                            :strength :preferred},
+                                                                                       :zen/desc "(USCDI) Amount of medication per dose"}},
+                                                                         :fhir/flags #{:MS},
+                                                                         :zen/desc "(USCDI) Amount of medication administered"}}},
+                                            :fhir/flags #{:MS},
+                                            :zen/desc "(USCDI) How the medication is to be used by the patient or administered by the caregiver"}},
+                :quantity {:fhir/flags #{:MS},
+                           :zen.fhir/value-set {:symbol hl7-fhir-r4-core.value-set.ucum-common/value-set,
+                                                :strength :preferred},
+                           :zen/desc "(USCDI) Amount dispensed"},
+                :authorizingPrescription {:type zen/vector,
+                                          :every {:fhir/flags #{:MS},
+                                                  :confirms #{zen.fhir/Reference},
+                                                  :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-medicationrequest/schema}},
+                                                  :zen/desc "(USCDI) Medication order that authorizes the dispense"}},
+                :subject {:fhir/flags #{:MS},
+                          :confirms #{zen.fhir/Reference},
+                          :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-patient/schema}},
+                          :zen/desc "(USCDI) Who the dispense is for"},
+                :performer {:type zen/vector,
+                            :every {:type zen/map,
+                                    :keys {:actor {:fhir/flags #{:MS},
+                                                   :confirms #{zen.fhir/Reference},
+                                                   :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-practitioner/schema
+                                                                                  hl7-fhir-us-core610.us-core-relatedperson/schema
+                                                                                  hl7-fhir-r4-core.Device/schema
+                                                                                  hl7-fhir-us-core610.us-core-patient/schema
+                                                                                  hl7-fhir-us-core610.us-core-practitionerrole/schema
+                                                                                  hl7-fhir-us-core610.us-core-organization/schema}},
+                                                   :zen/desc "(USCDI) Individual who was performing"}},
+                                    :fhir/flags #{:MS},
+                                    :zen/desc "(USCDI) Who performed event"}},
+                :medication {:fhir/polymorphic true,
+                             :type zen/map,
+                             :exclusive-keys #{#{:CodeableConcept
+                                                 :Reference}},
+                             :keys {:Reference {:confirms #{zen.fhir/Reference},
+                                                :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-medication/schema}}}},
+                             :fhir/flags #{:MS},
+                             :zen.fhir/value-set {:symbol us-nlm-vsac.value-set.2.16.840.1.113762.1.4.1010.4/value-set,
+                                                  :strength :extensible},
+                             :zen/desc "(USCDI) What medication was supplied"}},
+         :zen.fhir/type "MedicationDispense"}}

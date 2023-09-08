@@ -1,0 +1,151 @@
+{ns hl7-fhir-us-core610.search.us-core-procedure-date,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-procedure-date",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-procedure-date",
+         :fhir/type "date",
+         :name "date",
+         :expr {:Procedure {:knife [["performed"]],
+                            :jsonpath ["$.\"performed\"[*]"],
+                            :data-types #{{:type "string",
+                                           :polymorphic? true}
+                                          {:type "Age",
+                                           :polymorphic? true}
+                                          {:type "Range",
+                                           :polymorphic? true}
+                                          {:type "dateTime",
+                                           :polymorphic? true}
+                                          {:type "Period",
+                                           :polymorphic? true}},
+                            :template :date,
+                            :sql {:where [:or
+                                          [:and
+                                           [:>=
+                                            [:pg/call
+                                             :max_text_date_bound
+                                             [:pg/sql "{{param}}"]]
+                                            [:pg/call
+                                             :jsonpath_extract_max_timestamptz
+                                             [:pg/sql
+                                              "{{table}}.resource"]
+                                             "$.\"performed\"[*].string"]]
+                                           [:<=
+                                            [:pg/call
+                                             :min_text_date_bound
+                                             [:pg/sql "{{param}}"]]
+                                            [:pg/call
+                                             :jsonpath_extract_min_timestamptz
+                                             [:pg/sql
+                                              "{{table}}.resource"]
+                                             "$.\"performed\"[*].string"]]]
+                                          [:and
+                                           [:>=
+                                            [:pg/call
+                                             :max_text_date_bound
+                                             [:pg/sql "{{param}}"]]
+                                            [:pg/call
+                                             :jsonpath_extract_max_timestamptz
+                                             [:pg/sql
+                                              "{{table}}.resource"]
+                                             "$.\"performed\"[*].Age"]]
+                                           [:<=
+                                            [:pg/call
+                                             :min_text_date_bound
+                                             [:pg/sql "{{param}}"]]
+                                            [:pg/call
+                                             :jsonpath_extract_min_timestamptz
+                                             [:pg/sql
+                                              "{{table}}.resource"]
+                                             "$.\"performed\"[*].Age"]]]
+                                          [:and
+                                           [:>=
+                                            [:pg/call
+                                             :max_text_date_bound
+                                             [:pg/sql "{{param}}"]]
+                                            [:pg/call
+                                             :jsonpath_extract_max_timestamptz
+                                             [:pg/sql
+                                              "{{table}}.resource"]
+                                             "$.\"performed\"[*].Range"]]
+                                           [:<=
+                                            [:pg/call
+                                             :min_text_date_bound
+                                             [:pg/sql "{{param}}"]]
+                                            [:pg/call
+                                             :jsonpath_extract_min_timestamptz
+                                             [:pg/sql
+                                              "{{table}}.resource"]
+                                             "$.\"performed\"[*].Range"]]]
+                                          [:and
+                                           [:>=
+                                            [:pg/call
+                                             :max_text_date_bound
+                                             [:pg/sql "{{param}}"]]
+                                            [:pg/call
+                                             :jsonpath_extract_max_timestamptz
+                                             [:pg/sql
+                                              "{{table}}.resource"]
+                                             "$.\"performed\"[*].dateTime"]]
+                                           [:<=
+                                            [:pg/call
+                                             :min_text_date_bound
+                                             [:pg/sql "{{param}}"]]
+                                            [:pg/call
+                                             :jsonpath_extract_min_timestamptz
+                                             [:pg/sql
+                                              "{{table}}.resource"]
+                                             "$.\"performed\"[*].dateTime"]]]
+                                          [:or
+                                           [:and
+                                            [:>=
+                                             [:pg/call
+                                              :max_text_date_bound
+                                              [:pg/sql "{{param}}"]]
+                                             [:pg/call
+                                              :jsonpath_extract_max_timestamptz
+                                              [:pg/sql
+                                               "{{table}}.resource"]
+                                              "$.\"performed\"[*].Period.start"]]
+                                            [:<=
+                                             [:pg/call
+                                              :min_text_date_bound
+                                              [:pg/sql "{{param}}"]]
+                                             [:pg/call
+                                              :jsonpath_extract_min_timestamptz
+                                              [:pg/sql
+                                               "{{table}}.resource"]
+                                              "$.\"performed\"[*].Period.end"]]]
+                                           [:and
+                                            [:>=
+                                             [:pg/call
+                                              :max_text_date_bound
+                                              [:pg/sql "{{param}}"]]
+                                             [:pg/call
+                                              :jsonpath_extract_max_timestamptz
+                                              [:pg/sql
+                                               "{{table}}.resource"]
+                                              "$.\"performed\"[*].Period.start"]]
+                                            [:is
+                                             [:pg/call
+                                              :jsonpath_extract_max_timestamptz
+                                              [:pg/sql
+                                               "{{table}}.resource"]
+                                              "$.\"performed\"[*].Period.end"]
+                                             nil]]
+                                           [:and
+                                            [:<=
+                                             [:pg/call
+                                              :min_text_date_bound
+                                              [:pg/sql "{{param}}"]]
+                                             [:pg/call
+                                              :jsonpath_extract_min_timestamptz
+                                              [:pg/sql
+                                               "{{table}}.resource"]
+                                              "$.\"performed\"[*].Period.end"]]
+                                            [:is
+                                             [:pg/call
+                                              :jsonpath_extract_min_timestamptz
+                                              [:pg/sql
+                                               "{{table}}.resource"]
+                                              "$.\"performed\"[*].Period.start"]
+                                             nil]]]]}}}}}

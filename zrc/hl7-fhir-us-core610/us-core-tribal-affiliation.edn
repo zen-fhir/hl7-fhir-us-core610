@@ -1,0 +1,20 @@
+{ns hl7-fhir-us-core610.us-core-tribal-affiliation,
+ import #{zen.fhir
+          hl7-fhir-r4-core.boolean
+          hl7-fhir-r4-core.CodeableConcept
+          hl7-terminology-r4.value-set.v3-TribalEntityUS},
+ schema {:zen.fhir/version "0.6.32",
+         :zen/tags #{zen.fhir/extension
+                     zen/schema
+                     zen.fhir/structure-schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-tribal-affiliation",
+         :require #{:tribalAffiliation},
+         :type zen/map,
+         :zen/desc "This Extension profile represents a tribe or band with which a person associates and, optionally, whether they are enrolled.",
+         :keys {:tribalAffiliation {:confirms #{hl7-fhir-r4-core.CodeableConcept/schema},
+                                    :fhir/flags #{:MS},
+                                    :zen.fhir/value-set {:symbol hl7-terminology-r4.value-set.v3-TribalEntityUS/value-set,
+                                                         :strength :extensible},
+                                    :zen/desc "Tribal Entity US"},
+                :isEnrolled {:confirms #{hl7-fhir-r4-core.boolean/schema},
+                             :zen/desc "Enrolled tribe member"}}}}

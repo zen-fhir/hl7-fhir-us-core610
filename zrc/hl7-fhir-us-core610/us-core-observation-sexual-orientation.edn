@@ -1,0 +1,40 @@
+{ns hl7-fhir-us-core610.us-core-observation-sexual-orientation,
+ import #{hl7-fhir-r4-core.Observation
+          zen.fhir
+          hl7-fhir-r4-core.value-set.observation-status
+          hl7-fhir-us-core610.value-set.us-core-sexual-orientation
+          hl7-fhir-us-core610.us-core-patient},
+ schema {:zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.Observation/schema
+                     zen.fhir/Resource},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-sexual-orientation",
+         :require #{:subject},
+         :type zen/map,
+         :zen/desc "The US Core Observation Sexual Orientation Profile meets the U.S. Core Data for Interoperability (USCDI) v2 'Sexual Orientation' requirements. this profile sets minimum expectations for the Observation resource to record, search, and fetch sexual orientation observations associated with a patient to promote interoperability and adoption through common implementation.  It identifies which core elements, extensions, vocabularies, and value sets **SHALL** be present in the resource and constrains the way the elements are used when using this profile.  It provides the floor for standards development for specific use cases.",
+         :keys {:status {:fhir/flags #{:MS},
+                         :zen.fhir/value-set {:symbol hl7-fhir-r4-core.value-set.observation-status/value-set,
+                                              :strength :required},
+                         :zen/desc "(USCDI) registered | preliminary | final | amended +"},
+                :code {:match {:coding #{{:system "http://loinc.org",
+                                          :code "76690-7"}}},
+                       :fhir/flags #{:MS},
+                       :zen/desc "(USCDI) Sexual Orientation"},
+                :subject {:fhir/flags #{:MS},
+                          :confirms #{zen.fhir/Reference},
+                          :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-patient/schema}},
+                          :zen/desc "(USCDI) Who and/or what the observation is about"},
+                :effective {:fhir/polymorphic true,
+                            :type zen/map,
+                            :exclusive-keys #{#{:instant
+                                                :dateTime
+                                                :Period
+                                                :Timing}},
+                            :fhir/flags #{:MS},
+                            :zen/desc "(USCDI) Clinically relevant time/time-period for observation"},
+                :value {:type zen/map,
+                        :keys {:CodeableConcept {:fhir/flags #{:MS},
+                                                 :zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.us-core-sexual-orientation/value-set,
+                                                                      :strength :extensible},
+                                                 :zen/desc "(USCDI) Sexual Orientation"}}}},
+         :zen.fhir/type "Observation"}}

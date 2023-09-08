@@ -1,0 +1,62 @@
+{ns hl7-fhir-us-core610.us-core-condition-problems-health-concerns,
+ import #{hl7-fhir-r4-core.Condition
+          zen.fhir
+          hl7-fhir-r4-core.value-set.condition-ver-status
+          hl7-fhir-r4-core.value-set.condition-clinical
+          hl7-fhir-us-core610.value-set.us-core-condition-code
+          hl7-fhir-r4-core.condition-assertedDate
+          hl7-fhir-us-core610.us-core-patient},
+ schema {:zen.fhir/version "0.6.32",
+         :confirms #{zen.fhir/Resource
+                     hl7-fhir-r4-core.Condition/schema},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-problems-health-concerns",
+         :require #{:category :code},
+         :type zen/map,
+         :zen/desc "The US Core Condition Problems and Health Concerns Profile is based upon the core FHIR Condition Resource and meets the  U.S. Core Data for Interoperability (USCDI) v2 'Problems' and 'Health Concerns' requirements and SDOH 'Problems/Health Concerns' requirements.  In version 5.0.0, The US Core Condition Profile has been split into the US Core Condition Encounter Diagnosis Profile and US Core Condition Problems and Health Concerns Profile.  To promote interoperability and adoption through common implementation, this profile defines constraints and extensions on the Condition resource for the minimal set of data to record, search, and fetch information about a condition, diagnosis, or other event, situation, issue, or clinical concept that is documented and categorized as a problem or health concern including information about a Social Determinants of Health-related condition. It identifies which core elements, extensions, vocabularies, and value sets **SHALL** be present in the resource when and constrains the way the elements are used using this profile. It provides the floor for standards development for specific use cases.",
+         :keys {:onset {:fhir/polymorphic true,
+                        :type zen/map,
+                        :exclusive-keys #{#{:string
+                                            :dateTime
+                                            :Range
+                                            :Period
+                                            :Age}},
+                        :fhir/flags #{:MS},
+                        :zen/desc "(USCDI) Estimated or actual date,  date-time, or age"},
+                :category {:type zen/vector,
+                           :slicing {:slices {}},
+                           :every {:fhir/flags #{:MS},
+                                   :zen/desc "(USCDI) category codes"},
+                           :minItems 1},
+                :clinicalStatus {:fhir/flags #{:MS},
+                                 :zen.fhir/value-set {:symbol hl7-fhir-r4-core.value-set.condition-clinical/value-set,
+                                                      :strength :required},
+                                 :zen/desc "(USCDI) active | recurrence | relapse | inactive | remission | resolved"},
+                :abatement {:fhir/polymorphic true,
+                            :type zen/map,
+                            :exclusive-keys #{#{:string
+                                                :dateTime
+                                                :Range
+                                                :Period
+                                                :Age}},
+                            :fhir/flags #{:MS},
+                            :zen/desc "(USCDI) When in resolution/remission"},
+                :recordedDate {:fhir/flags #{:MS},
+                               :zen/desc "(USCDI) Date record was first recorded"},
+                :assertedDate {:confirms #{hl7-fhir-r4-core.condition-assertedDate/schema},
+                               :fhir/extensionUri "http://hl7.org/fhir/StructureDefinition/condition-assertedDate",
+                               :fhir/flags #{:MS},
+                               :zen/desc "(USCDI) Date the condition was first asserted"},
+                :code {:fhir/flags #{:MS},
+                       :zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.us-core-condition-code/value-set,
+                                            :strength :extensible},
+                       :zen/desc "(USCDI) Identification of the condition, problem or diagnosis"},
+                :verificationStatus {:fhir/flags #{:MS},
+                                     :zen.fhir/value-set {:symbol hl7-fhir-r4-core.value-set.condition-ver-status/value-set,
+                                                          :strength :required},
+                                     :zen/desc "(USCDI) unconfirmed | provisional | differential | confirmed | refuted | entered-in-error"},
+                :subject {:fhir/flags #{:MS},
+                          :confirms #{zen.fhir/Reference},
+                          :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-patient/schema}},
+                          :zen/desc "(USCDI) Who has the condition?"}},
+         :zen.fhir/type "Condition"}}

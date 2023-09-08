@@ -1,0 +1,31 @@
+{ns hl7-fhir-us-core610.us-core-location,
+ import #{hl7-fhir-us-core610.value-set.us-core-usps-state
+          zen.fhir
+          hl7-fhir-us-core610.us-core-organization
+          hl7-fhir-r4-core.Location},
+ schema {:zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.Location/schema
+                     zen.fhir/Resource},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-location",
+         :require #{:name},
+         :type zen/map,
+         :zen/desc "This profile sets minimum expectations for the Location resource for recording, searching for and fetching a Location associated with a patient, provider or organization to promote interoperability and adoption through common implementation.  It identifies which core elements, extensions, vocabularies, and value sets **SHALL** be present and constrains the way the elements are used when using the profile.  It provides the floor for standards development for specific use cases.",
+         :keys {:status {:fhir/flags #{:MS}},
+                :name {:fhir/flags #{:MS}},
+                :telecom {:type zen/vector,
+                          :every {:fhir/flags #{:MS}}},
+                :address {:type zen/map,
+                          :keys {:line {:type zen/vector,
+                                        :every {:fhir/flags #{:MS}}},
+                                 :city {:fhir/flags #{:MS}},
+                                 :state {:fhir/flags #{:MS},
+                                         :zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.us-core-usps-state/value-set,
+                                                              :strength :extensible}},
+                                 :postalCode {:fhir/flags #{:MS},
+                                              :zen/desc "US Zip Codes"}},
+                          :fhir/flags #{:MS}},
+                :managingOrganization {:fhir/flags #{:MS},
+                                       :confirms #{zen.fhir/Reference},
+                                       :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-organization/schema}}}},
+         :zen.fhir/type "Location"}}

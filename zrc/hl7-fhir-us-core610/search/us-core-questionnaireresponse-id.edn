@@ -1,0 +1,11 @@
+{ns hl7-fhir-us-core610.search.us-core-questionnaireresponse-id,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-questionnaireresponse-id",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-questionnaireresponse-id",
+         :fhir/type "token",
+         :name "_id",
+         :expr {:QuestionnaireResponse {:knife [["id"]],
+                                        :jsonpath ["$.\"id\"[*]"],
+                                        :data-types #{},
+                                        :template :token}}}}

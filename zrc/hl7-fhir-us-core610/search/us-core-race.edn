@@ -1,0 +1,15 @@
+{ns hl7-fhir-us-core610.search.us-core-race,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-race",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-race",
+         :fhir/type "token",
+         :name "race",
+         :expr {:Patient {:knife [["extension"
+                                   {:url "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race"}
+                                   "extension"
+                                   "value"
+                                   "code"]],
+                          :jsonpath ["$.\"extension\"?(@.\"url\"==\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\").\"extension\".\"value\".\"code\"[*]"],
+                          :data-types #{},
+                          :template :token}}}}

@@ -1,0 +1,13 @@
+{ns hl7-fhir-us-core610.search.us-core-condition-patient,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-condition-patient",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-condition-patient",
+         :fhir/type "reference",
+         :name "patient",
+         :expr {:Condition {:knife [["subject"
+                                     {:resourceType "Patient"}]],
+                            :jsonpath ["$.\"subject\"?(@.\"resourceType\"==\"Patient\")[*]"],
+                            :data-types #{{:type "Reference",
+                                           :polymorphic? false}},
+                            :template :reference}}}}

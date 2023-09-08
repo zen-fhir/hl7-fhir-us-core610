@@ -1,0 +1,10 @@
+{ns hl7-fhir-us-core610.us-core-extension-questionnaire-uri,
+ import #{zen.fhir hl7-fhir-r4-core.uri},
+ schema {:zen/tags #{zen.fhir/extension
+                     zen/schema
+                     zen.fhir/structure-schema},
+         :zen/desc "The location where a non-FHIR questionnaire/survey form can be found. This extension is used when the survey,form, or questionnaire which is being anwered is not a FHIR [Questionnaire](https://www.hl7.org/fhir/questionnaire.html), otherwise the [canonical url](https://www.hl7.org/fhir/references.html#canonical) for the FHIR Questionnaire is used.",
+         :zen.fhir/type "uri",
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-extension-questionnaire-uri",
+         :zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.uri/schema}}}

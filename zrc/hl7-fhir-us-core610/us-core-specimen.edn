@@ -1,0 +1,19 @@
+{ns hl7-fhir-us-core610.us-core-specimen,
+ import #{zen.fhir
+          hl7-fhir-r4-core.Specimen
+          hl7-fhir-us-core610.us-core-patient},
+ schema {:zen.fhir/version "0.6.32",
+         :confirms #{zen.fhir/Resource
+                     hl7-fhir-r4-core.Specimen/schema},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-specimen",
+         :require #{:type},
+         :type zen/map,
+         :zen/desc "This profile sets minimum expectations for the Specimen resource to record, search, and fetch \"substances being sampled or tested. (e.g., nasopharyngeal swab, whole blood, serum, urine, wound swab)\" associated with a patient to promote interoperability and adoption through common implementation.  It identifies which core elements, extensions, vocabularies, and value sets **SHALL** be present in the resource and constrains the way the elements are used when using this profile.  It provides the floor for standards development for specific use cases.",
+         :keys {:type {:fhir/flags #{:MS},
+                       :zen/desc "(USCDI) Kind of material that forms the specimen"},
+                :subject {:fhir/flags #{:MS},
+                          :confirms #{zen.fhir/Reference},
+                          :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-patient/schema}},
+                          :zen/desc "(USCDI) The patient where the specimen came from."}},
+         :zen.fhir/type "Specimen"}}

@@ -1,0 +1,15 @@
+{ns hl7-fhir-us-core610.search.us-core-ethnicity,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-ethnicity",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-ethnicity",
+         :fhir/type "token",
+         :name "ethnicity",
+         :expr {:Patient {:knife [["extension"
+                                   {:url "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity"}
+                                   "extension"
+                                   "value"
+                                   "code"]],
+                          :jsonpath ["$.\"extension\"?(@.\"url\"==\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\").\"extension\".\"value\".\"code\"[*]"],
+                          :data-types #{},
+                          :template :token}}}}

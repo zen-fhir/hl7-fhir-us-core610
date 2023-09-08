@@ -1,0 +1,32 @@
+{ns hl7-fhir-us-core610.search.us-core-patient-birthdate,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-patient-birthdate",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-patient-birthdate",
+         :fhir/type "date",
+         :name "birthdate",
+         :expr {:Patient {:knife [["birthDate"]],
+                          :jsonpath ["$.\"birthDate\"[*]"],
+                          :data-types #{{:type "date",
+                                         :polymorphic? false}},
+                          :template :date,
+                          :sql {:where [:or
+                                        [:and
+                                         [:>=
+                                          [:pg/call
+                                           :max_text_date_bound
+                                           [:pg/sql "{{param}}"]]
+                                          [:pg/call
+                                           :jsonpath_extract_max_timestamptz
+                                           [:pg/sql
+                                            "{{table}}.resource"]
+                                           "$.\"birthDate\"[*]"]]
+                                         [:<=
+                                          [:pg/call
+                                           :min_text_date_bound
+                                           [:pg/sql "{{param}}"]]
+                                          [:pg/call
+                                           :jsonpath_extract_min_timestamptz
+                                           [:pg/sql
+                                            "{{table}}.resource"]
+                                           "$.\"birthDate\"[*]"]]]]}}}}}

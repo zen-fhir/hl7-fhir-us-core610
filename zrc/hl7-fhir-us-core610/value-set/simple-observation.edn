@@ -1,0 +1,18 @@
+{ns hl7-fhir-us-core610.value-set.simple-observation,
+ import #{zen.fhir},
+ value-set {:zen/tags #{zen.fhir/value-set},
+            :zen/desc "This value set includes all LOINC codes and the SNOMED CT finding hierarchy codes",
+            :zen.fhir/version "0.6.32",
+            :fhir/code-systems #{{:fhir/url "http://loinc.org",
+                                  :zen.fhir/content :not-present}
+                                 {:fhir/url "http://snomed.info/sct",
+                                  :zen.fhir/content :not-present}},
+            :uri "http://hl7.org/fhir/us/core/ValueSet/simple-observation",
+            :version "6.1.0",
+            :ftr {:module "hl7-fhir-us-core610",
+                  :source-url "https://storage.googleapis.com",
+                  :source-type :cloud-storage,
+                  :ftr-path "ftr",
+                  :tag "init",
+                  :validation-index {:type :nippy,
+                                     :file "index.nippy"}}}}

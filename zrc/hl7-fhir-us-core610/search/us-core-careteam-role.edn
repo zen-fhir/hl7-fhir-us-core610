@@ -1,0 +1,12 @@
+{ns hl7-fhir-us-core610.search.us-core-careteam-role,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-careteam-role",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-careteam-role",
+         :fhir/type "token",
+         :name "role",
+         :expr {:CareTeam {:knife [["participant" "role"]],
+                           :jsonpath ["$.\"participant\".\"role\"[*]"],
+                           :data-types #{{:type "CodeableConcept",
+                                          :polymorphic? false}},
+                           :template :token}}}}

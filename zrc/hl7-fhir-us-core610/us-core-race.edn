@@ -1,0 +1,29 @@
+{ns hl7-fhir-us-core610.us-core-race,
+ import #{zen.fhir
+          hl7-fhir-us-core610.value-set.omb-race-category
+          hl7-fhir-r4-core.string
+          hl7-fhir-r4-core.Coding
+          hl7-fhir-us-core610.value-set.detailed-race},
+ schema {:zen.fhir/version "0.6.32",
+         :zen/tags #{zen.fhir/extension
+                     zen/schema
+                     zen.fhir/structure-schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+         :require #{:text},
+         :type zen/map,
+         :zen/desc "Concepts classifying the person into a named category of humans sharing common history, traits, geographical origin or nationality.  The race codes used to represent these concepts are based upon the [CDC Race and Ethnicity Code Set Version 1.0](http://www.cdc.gov/phin/resources/vocabulary/index.html#3) which includes over 900 concepts for representing race and ethnicity of which 921 reference race.  The race concepts are grouped by and pre-mapped to the 5 OMB race categories:\n\n - American Indian or Alaska Native\n - Asian\n - Black or African American\n - Native Hawaiian or Other Pacific Islander\n - White.",
+         :keys {:ombCategory {:type zen/vector,
+                              :every {:confirms #{hl7-fhir-r4-core.Coding/schema},
+                                      :fhir/flags #{:MS},
+                                      :zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.omb-race-category/value-set,
+                                                           :strength :required},
+                                      :zen/desc "(USCDI) American Indian or Alaska Native|Asian|Black or African American|Native Hawaiian or Other Pacific Islander|White"},
+                              :maxItems 5},
+                :detailed {:type zen/vector,
+                           :every {:confirms #{hl7-fhir-r4-core.Coding/schema},
+                                   :zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.detailed-race/value-set,
+                                                        :strength :required},
+                                   :zen/desc "Extended race codes"}},
+                :text {:confirms #{hl7-fhir-r4-core.string/schema},
+                       :fhir/flags #{:MS},
+                       :zen/desc "(USCDI) Race Text"}}}}

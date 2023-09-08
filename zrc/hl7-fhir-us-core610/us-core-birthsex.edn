@@ -1,0 +1,14 @@
+{ns hl7-fhir-us-core610.us-core-birthsex,
+ import #{hl7-fhir-r4-core.code
+          zen.fhir
+          hl7-fhir-us-core610.value-set.birthsex},
+ schema {:zen/tags #{zen.fhir/extension
+                     zen/schema
+                     zen.fhir/structure-schema},
+         :zen/desc "A code classifying the person's sex assigned at birth  as specified by the [Office of the National Coordinator for Health IT (ONC)](https://www.healthit.gov/newsroom/about-onc). This extension aligns with the C-CDA Birth Sex Observation (LOINC 76689-9). After version 6.0.0, this extension is no longer a *USCDI Requirement*.",
+         :zen.fhir/type "code",
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex",
+         :zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.code/schema},
+         :zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.birthsex/value-set,
+                              :strength :required}}}

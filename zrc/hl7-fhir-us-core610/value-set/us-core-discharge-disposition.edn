@@ -1,0 +1,9 @@
+{ns hl7-fhir-us-core610.value-set.us-core-discharge-disposition,
+ import #{zen.fhir},
+ value-set {:zen/tags #{zen.fhir/value-set},
+            :zen/desc "[National Uniform Billing Committee](http://www.nubc.org/), manual UB-04, UB form locator 17.",
+            :zen.fhir/version "0.6.32",
+            :fhir/code-systems #{{:fhir/url "http://www.nubc.org/patient-discharge",
+                                  :zen.fhir/content :not-present}},
+            :uri "http://hl7.org/fhir/us/core/ValueSet/us-core-discharge-disposition",
+            :version "6.1.0"}}

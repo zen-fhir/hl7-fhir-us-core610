@@ -1,0 +1,43 @@
+{ns hl7-fhir-us-core610.us-core-procedure,
+ import #{zen.fhir
+          hl7-fhir-us-core610.value-set.us-core-procedure-code
+          hl7-fhir-r4-core.value-set.event-status
+          hl7-fhir-us-core610.us-core-servicerequest
+          hl7-fhir-r4-core.Procedure
+          hl7-fhir-us-core610.us-core-careplan
+          hl7-fhir-us-core610.us-core-patient},
+ schema {:zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.Procedure/schema
+                     zen.fhir/Resource},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure",
+         :require #{:code},
+         :type zen/map,
+         :zen/desc "The US Core Procedure Profile is based upon the core FHIR Procedure Resource and meets the U.S. Core Data for Interoperability (USCDI) v2 'Procedures' requirements. This profile sets minimum expectations for the Procedure resource to record, search, and fetch procedures associated with a patient to promote interoperability and adoption through common implementation.  It identifies which core elements, extensions, vocabularies, and value sets **SHALL** be present in the resource and constrains the way the elements are used when using this profile.  It provides the floor for standards development for specific use cases.",
+         :keys {:basedOn {:type zen/vector,
+                          :every {:confirms #{zen.fhir/Reference},
+                                  :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-servicerequest/schema
+                                                                 hl7-fhir-us-core610.us-core-careplan/schema}},
+                                  :zen/desc "(USCDI) A request for this procedure"}},
+                :status {:fhir/flags #{:MS},
+                         :zen.fhir/value-set {:symbol hl7-fhir-r4-core.value-set.event-status/value-set,
+                                              :strength :required},
+                         :zen/desc "(USCDI) preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown"},
+                :code {:fhir/flags #{:MS},
+                       :zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.us-core-procedure-code/value-set,
+                                            :strength :extensible},
+                       :zen/desc "(USCDI) Identification of the procedure"},
+                :subject {:fhir/flags #{:MS},
+                          :confirms #{zen.fhir/Reference},
+                          :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-patient/schema}},
+                          :zen/desc "(USCDI) Who the procedure was performed on"},
+                :performed {:fhir/polymorphic true,
+                            :type zen/map,
+                            :exclusive-keys #{#{:string
+                                                :dateTime
+                                                :Range
+                                                :Period
+                                                :Age}},
+                            :fhir/flags #{:MS},
+                            :zen/desc "(USCDI) When the procedure was performed"}},
+         :zen.fhir/type "Procedure"}}

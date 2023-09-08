@@ -1,0 +1,18 @@
+{ns hl7-fhir-us-core610.value-set.us-core-sexual-orientation,
+ import #{zen.fhir},
+ value-set {:zen/tags #{zen.fhir/value-set},
+            :zen/desc "The US Core Sexual Orientation Value Set includes concepts to describe a person's sexual orientation (who they are attracted to).",
+            :zen.fhir/version "0.6.32",
+            :fhir/code-systems #{{:fhir/url "http://snomed.info/sct",
+                                  :zen.fhir/content :bundled}
+                                 {:fhir/url "http://terminology.hl7.org/CodeSystem/v3-NullFlavor",
+                                  :zen.fhir/content :bundled}},
+            :uri "http://hl7.org/fhir/us/core/ValueSet/us-core-sexual-orientation",
+            :version "6.1.0",
+            :ftr {:module "hl7-fhir-us-core610",
+                  :source-url "https://storage.googleapis.com",
+                  :source-type :cloud-storage,
+                  :ftr-path "ftr",
+                  :tag "init",
+                  :validation-index {:type :nippy,
+                                     :file "index.nippy"}}}}

@@ -1,0 +1,27 @@
+{ns hl7-fhir-us-core610.us-core-ethnicity,
+ import #{zen.fhir
+          hl7-fhir-r4-core.string
+          hl7-fhir-us-core610.value-set.detailed-ethnicity
+          hl7-fhir-us-core610.value-set.omb-ethnicity-category
+          hl7-fhir-r4-core.Coding},
+ schema {:zen.fhir/version "0.6.32",
+         :zen/tags #{zen.fhir/extension
+                     zen/schema
+                     zen.fhir/structure-schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+         :require #{:text},
+         :type zen/map,
+         :zen/desc "Concepts classifying the person into a named category of humans sharing common history, traits, geographical origin or nationality.  The ethnicity codes used to represent these concepts are based upon the [CDC ethnicity and Ethnicity Code Set Version 1.0](http://www.cdc.gov/phin/resources/vocabulary/index.html) which includes over 900 concepts for representing race and ethnicity of which 43 reference ethnicity.  The ethnicity concepts are grouped by and pre-mapped to the 2 OMB ethnicity categories: - Hispanic or Latino - Not Hispanic or Latino.",
+         :keys {:ombCategory {:confirms #{hl7-fhir-r4-core.Coding/schema},
+                              :fhir/flags #{:MS},
+                              :zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.omb-ethnicity-category/value-set,
+                                                   :strength :required},
+                              :zen/desc "(USCDI) Hispanic or Latino|Not Hispanic or Latino"},
+                :detailed {:type zen/vector,
+                           :every {:confirms #{hl7-fhir-r4-core.Coding/schema},
+                                   :zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.detailed-ethnicity/value-set,
+                                                        :strength :required},
+                                   :zen/desc "Extended ethnicity codes"}},
+                :text {:confirms #{hl7-fhir-r4-core.string/schema},
+                       :fhir/flags #{:MS},
+                       :zen/desc "(USCDI) ethnicity Text"}}}}

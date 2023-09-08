@@ -1,0 +1,77 @@
+{ns hl7-fhir-us-core610.us-core-diagnosticreport-note,
+ import #{hl7-fhir-r4-core.Observation
+          zen.fhir
+          hl7-fhir-r4-core.DiagnosticReport
+          hl7-fhir-us-core610.us-core-observation-clinical-result
+          hl7-fhir-us-core610.us-core-encounter
+          hl7-fhir-us-core610.us-core-careteam
+          hl7-fhir-us-core610.value-set.us-core-diagnosticreport-report-and-note-codes
+          hl7-fhir-us-core610.us-core-practitioner
+          hl7-fhir-us-core610.us-core-organization
+          hl7-fhir-r4-core.value-set.diagnostic-report-status
+          hl7-fhir-us-core610.us-core-observation-lab
+          hl7-fhir-us-core610.us-core-practitionerrole
+          hl7-fhir-us-core610.us-core-patient},
+ schema {:zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.DiagnosticReport/schema
+                     zen.fhir/Resource},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-note",
+         :require #{:category :subject},
+         :type zen/map,
+         :zen/desc "To promote interoperability and adoption through common implementation, this profile sets minimum expectations for searching and fetching Diagnostic Reports and Notes using the DiagnosticReport resource. It identifies which core elements, extensions, vocabularies, and value sets **SHALL** be present and constrains the way the elements are used when using the profile. It provides the floor for standards development for specific use cases. Prior to reviewing this profile, implementers are encouraged to read the Clinical Notes Guidance to understand the overlap of US Core DiagnosticReport Profile for Report and Note exchange and US Core DocumentReference Profile.",
+         :keys {:category {:type zen/vector,
+                           :slicing {:slices {}},
+                           :every {:fhir/flags #{:MS},
+                                   :zen/desc "(USCDI) Service category"},
+                           :minItems 1},
+                :encounter {:fhir/flags #{:MS},
+                            :confirms #{zen.fhir/Reference},
+                            :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-encounter/schema}},
+                            :zen/desc "(USCDI) Health care event when test ordered"},
+                :status {:fhir/flags #{:MS},
+                         :zen.fhir/value-set {:symbol hl7-fhir-r4-core.value-set.diagnostic-report-status/value-set,
+                                              :strength :required},
+                         :zen/desc "(USCDI) registered | partial | preliminary | final +"},
+                :result {:type zen/vector,
+                         :every {:fhir/flags #{:MS},
+                                 :confirms #{zen.fhir/Reference},
+                                 :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-observation-clinical-result/schema
+                                                                hl7-fhir-r4-core.Observation/schema
+                                                                hl7-fhir-us-core610.us-core-observation-lab/schema}},
+                                 :zen/desc "(USCDI) Observations"}},
+                :effective {:fhir/polymorphic true,
+                            :type zen/map,
+                            :exclusive-keys #{#{:dateTime :Period}},
+                            :fhir/flags #{:MS},
+                            :zen/desc "(USCDI) Diagnostically relevant time (typically the time of the procedure)"},
+                :code {:fhir/flags #{:MS},
+                       :zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.us-core-diagnosticreport-report-and-note-codes/value-set,
+                                            :strength :extensible},
+                       :zen/desc "(USCDI) US Core Report Code"},
+                :issued {:fhir/flags #{:MS},
+                         :zen/desc "(USCDI) DateTime this version was made"},
+                :presentedForm {:type zen/vector,
+                                :every {:fhir/flags #{:MS},
+                                        :zen/desc "(USCDI) Entire report as issued"}},
+                :media {:type zen/vector,
+                        :every {:type zen/map,
+                                :keys {:link {:fhir/flags #{:MS},
+                                              :confirms #{zen.fhir/Reference},
+                                              :zen.fhir/reference {:refers #{}},
+                                              :zen/desc "(USCDI) Reference to the image source"}},
+                                :fhir/flags #{:MS},
+                                :zen/desc "(USCDI) Key images associated with this report"}},
+                :subject {:fhir/flags #{:MS},
+                          :confirms #{zen.fhir/Reference},
+                          :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-patient/schema}},
+                          :zen/desc "(USCDI) The subject of the report - usually, but not always, the patient"},
+                :performer {:type zen/vector,
+                            :every {:fhir/flags #{:MS},
+                                    :confirms #{zen.fhir/Reference},
+                                    :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-practitioner/schema
+                                                                   hl7-fhir-us-core610.us-core-careteam/schema
+                                                                   hl7-fhir-us-core610.us-core-practitionerrole/schema
+                                                                   hl7-fhir-us-core610.us-core-organization/schema}},
+                                    :zen/desc "(USCDI) Responsible Diagnostic Service"}}},
+         :zen.fhir/type "DiagnosticReport"}}

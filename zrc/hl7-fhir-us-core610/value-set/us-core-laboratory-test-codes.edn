@@ -1,0 +1,9 @@
+{ns hl7-fhir-us-core610.value-set.us-core-laboratory-test-codes,
+ import #{zen.fhir},
+ value-set {:zen/tags #{zen.fhir/value-set},
+            :zen/desc "Laboratory LOINC codes: From the introduction to August 2022 LOINC Users' guide; \"The current scope of the existing laboratory portion of the LOINC  database includes all observations reported by clinical laboratories, including the specialty areas: chemistry, including therapeutic drug monitoring and toxicology; hematology; serology; blood bank; microbiology; cytology; surgical pathology; and fertility.",
+            :zen.fhir/version "0.6.32",
+            :fhir/code-systems #{{:fhir/url "http://loinc.org",
+                                  :zen.fhir/content :not-present}},
+            :uri "http://hl7.org/fhir/us/core/ValueSet/us-core-laboratory-test-codes",
+            :version "6.1.0"}}

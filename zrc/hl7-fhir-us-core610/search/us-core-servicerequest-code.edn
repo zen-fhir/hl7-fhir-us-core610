@@ -1,0 +1,12 @@
+{ns hl7-fhir-us-core610.search.us-core-servicerequest-code,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-servicerequest-code",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-servicerequest-code",
+         :fhir/type "token",
+         :name "code",
+         :expr {:ServiceRequest {:knife [["code"]],
+                                 :jsonpath ["$.\"code\"[*]"],
+                                 :data-types #{{:type "CodeableConcept",
+                                                :polymorphic? false}},
+                                 :template :token}}}}

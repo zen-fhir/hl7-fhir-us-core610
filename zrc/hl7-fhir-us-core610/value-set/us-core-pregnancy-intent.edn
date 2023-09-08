@@ -1,0 +1,18 @@
+{ns hl7-fhir-us-core610.value-set.us-core-pregnancy-intent,
+ import #{zen.fhir},
+ value-set {:zen/tags #{zen.fhir/value-set},
+            :zen/desc "This value set includes SNOMED CT codes and the HL7 V3 code for the concept \"unknown\".",
+            :zen.fhir/version "0.6.32",
+            :fhir/code-systems #{{:fhir/url "http://snomed.info/sct",
+                                  :zen.fhir/content :bundled}
+                                 {:fhir/url "http://terminology.hl7.org/CodeSystem/v3-NullFlavor",
+                                  :zen.fhir/content :bundled}},
+            :uri "http://hl7.org/fhir/us/core/ValueSet/us-core-pregnancy-intent",
+            :version "6.1.0",
+            :ftr {:module "hl7-fhir-us-core610",
+                  :source-url "https://storage.googleapis.com",
+                  :source-type :cloud-storage,
+                  :ftr-path "ftr",
+                  :tag "init",
+                  :validation-index {:type :nippy,
+                                     :file "index.nippy"}}}}

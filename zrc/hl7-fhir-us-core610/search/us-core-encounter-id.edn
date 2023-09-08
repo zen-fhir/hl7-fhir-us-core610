@@ -1,0 +1,11 @@
+{ns hl7-fhir-us-core610.search.us-core-encounter-id,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-encounter-id",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-encounter-id",
+         :fhir/type "token",
+         :name "_id",
+         :expr {:Encounter {:knife [["id"]],
+                            :jsonpath ["$.\"id\"[*]"],
+                            :data-types #{},
+                            :template :token}}}}

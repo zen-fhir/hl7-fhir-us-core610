@@ -1,0 +1,10 @@
+{ns hl7-fhir-us-core610.uscdi-requirement,
+ import #{zen.fhir hl7-fhir-r4-core.boolean},
+ schema {:zen/tags #{zen.fhir/extension
+                     zen/schema
+                     zen.fhir/structure-schema},
+         :zen/desc "**This extension is only used in the US Core Implementation Guide's Profile StructureDefinition elements.** It flags elements that are ONC USCDI Requirements for certified systems. See the [Conformance page](http://hl7.org/fhir/us/core/general-requirements.html) for more information.",
+         :zen.fhir/type "boolean",
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/uscdi-requirement",
+         :zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.boolean/schema}}}

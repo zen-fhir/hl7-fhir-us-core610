@@ -1,0 +1,12 @@
+{ns hl7-fhir-us-core610.search.us-core-relatedperson-patient,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-relatedperson-patient",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-relatedperson-patient",
+         :fhir/type "reference",
+         :name "patient",
+         :expr {:RelatedPerson {:knife [["patient"]],
+                                :jsonpath ["$.\"patient\"[*]"],
+                                :data-types #{{:type "Reference",
+                                               :polymorphic? false}},
+                                :template :reference}}}}

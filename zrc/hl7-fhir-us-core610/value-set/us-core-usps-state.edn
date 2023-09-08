@@ -1,0 +1,9 @@
+{ns hl7-fhir-us-core610.value-set.us-core-usps-state,
+ import #{zen.fhir},
+ value-set {:zen/tags #{zen.fhir/value-set},
+            :zen/desc "This value set defines two letter USPS alphabetic codes.",
+            :zen.fhir/version "0.6.32",
+            :fhir/code-systems #{{:fhir/url "https://www.usps.com/",
+                                  :zen.fhir/content :not-present}},
+            :uri "http://hl7.org/fhir/us/core/ValueSet/us-core-usps-state",
+            :version "6.1.0"}}

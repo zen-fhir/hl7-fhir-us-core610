@@ -1,0 +1,12 @@
+{ns hl7-fhir-us-core610.search.us-core-condition-encounter,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-condition-encounter",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-condition-encounter",
+         :fhir/type "reference",
+         :name "encounter",
+         :expr {:Condition {:knife [["encounter"]],
+                            :jsonpath ["$.\"encounter\"[*]"],
+                            :data-types #{{:type "Reference",
+                                           :polymorphic? false}},
+                            :template :reference}}}}

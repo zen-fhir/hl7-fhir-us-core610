@@ -1,0 +1,82 @@
+{ns hl7-fhir-us-core610.us-core-documentreference,
+ import #{hl7-fhir-r4-core.Device
+          hl7-fhir-us-core610.us-core-relatedperson
+          zen.fhir
+          hl7-fhir-us-core610.us-core-encounter
+          hl7-fhir-r4-core.value-set.document-reference-status
+          hl7-fhir-us-core610.us-core-practitioner
+          hl7-fhir-us-core610.us-core-organization
+          hl7-fhir-us-core610.value-set.us-core-documentreference-type
+          hl7-fhir-r4-core.DocumentReference
+          hl7-fhir-us-core610.us-core-practitionerrole
+          hl7-fhir-us-core610.us-core-patient
+          hl7-fhir-r4-core.value-set.formatcodes},
+ schema {:zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.DocumentReference/schema
+                     zen.fhir/Resource},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-documentreference",
+         :require #{:category :type :subject},
+         :type zen/map,
+         :zen/desc "To promote interoperability and adoption through common implementation, this profile sets minimum expectations for searching and fetching patient documents including Clinical Notes using the DocumentReference resource. It identifies which core elements, extensions, vocabularies, and value sets **SHALL** be present and constrains the way the elements are used when using the profile. It provides the floor for standards development for specific use cases. Prior to reviewing this profile, implementers are encouraged to read the Clinical Notes Guidance to understand the overlap of US Core DocumentReference Profile and US Core DiagnosticReport Profile for Report and Note exchange.",
+         :keys {:category {:type zen/vector,
+                           :slicing {:slices {}},
+                           :every {:fhir/flags #{:MS},
+                                   :zen/desc "(USCDI) Categorization of document"},
+                           :minItems 1},
+                :date {:fhir/flags #{:MS},
+                       :zen/desc "(USCDI) When this document reference was created"},
+                :content {:type zen/vector,
+                          :every {:type zen/map,
+                                  :keys {:attachment {:type zen/map,
+                                                      :keys {:contentType {:fhir/flags #{:MS},
+                                                                           :zen/desc "(USCDI) Mime type of the content, with charset etc."},
+                                                             :data {:fhir/flags #{:MS},
+                                                                    :zen/desc "(USCDI) Data inline, base64ed"},
+                                                             :url {:fhir/flags #{:MS},
+                                                                   :zen/desc "(USCDI) Uri where the data can be found"}},
+                                                      :fhir/flags #{:MS},
+                                                      :zen/desc "(USCDI) Where to access the document"},
+                                         :format {:fhir/flags #{:MS},
+                                                  :zen.fhir/value-set {:symbol hl7-fhir-r4-core.value-set.formatcodes/value-set,
+                                                                       :strength :extensible},
+                                                  :zen/desc "(USCDI) Format/content rules for the document"}},
+                                  :fhir/flags #{:MS},
+                                  :zen/desc "(USCDI) Document referenced"}},
+                :type {:fhir/flags #{:MS},
+                       :zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.us-core-documentreference-type/value-set,
+                                            :strength :required},
+                       :zen/desc "(USCDI) Kind of document (LOINC if possible)"},
+                :author {:type zen/vector,
+                         :every {:fhir/flags #{:MS},
+                                 :confirms #{zen.fhir/Reference},
+                                 :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-practitioner/schema
+                                                                hl7-fhir-us-core610.us-core-relatedperson/schema
+                                                                hl7-fhir-r4-core.Device/schema
+                                                                hl7-fhir-us-core610.us-core-patient/schema
+                                                                hl7-fhir-us-core610.us-core-practitionerrole/schema
+                                                                hl7-fhir-us-core610.us-core-organization/schema}},
+                                 :zen/desc "(USCDI) Who and/or what authored the document"}},
+                :status {:fhir/flags #{:MS},
+                         :zen.fhir/value-set {:symbol hl7-fhir-r4-core.value-set.document-reference-status/value-set,
+                                              :strength :required},
+                         :zen/desc "(USCDI) current | superseded | entered-in-error"},
+                :identifier {:type zen/vector,
+                             :every {:fhir/flags #{:MS},
+                                     :zen/desc "(USCDI) Other identifiers for the document"}},
+                :context {:type zen/map,
+                          :keys {:encounter {:type zen/vector,
+                                             :every {:fhir/flags #{:MS},
+                                                     :confirms #{zen.fhir/Reference},
+                                                     :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-encounter/schema}},
+                                                     :zen/desc "(USCDI) Context of the document  content"},
+                                             :maxItems 1},
+                                 :period {:fhir/flags #{:MS},
+                                          :zen/desc "(USCDI) Time of service that is being documented"}},
+                          :fhir/flags #{:MS},
+                          :zen/desc "(USCDI) Clinical context of document"},
+                :subject {:fhir/flags #{:MS},
+                          :confirms #{zen.fhir/Reference},
+                          :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-patient/schema}},
+                          :zen/desc "(USCDI) Who/what is the subject of the document"}},
+         :zen.fhir/type "DocumentReference"}}

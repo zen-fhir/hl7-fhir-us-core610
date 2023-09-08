@@ -1,0 +1,11 @@
+{ns hl7-fhir-us-core610.search.us-core-specimen-id,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-specimen-id",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-specimen-id",
+         :fhir/type "token",
+         :name "_id",
+         :expr {:Specimen {:knife [["id"]],
+                           :jsonpath ["$.\"id\"[*]"],
+                           :data-types #{},
+                           :template :token}}}}

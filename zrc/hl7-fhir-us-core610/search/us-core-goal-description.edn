@@ -1,0 +1,12 @@
+{ns hl7-fhir-us-core610.search.us-core-goal-description,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-goal-description",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-goal-description",
+         :fhir/type "token",
+         :name "description",
+         :expr {:Goal {:knife [["description"]],
+                       :jsonpath ["$.\"description\"[*]"],
+                       :data-types #{{:type "CodeableConcept",
+                                      :polymorphic? false}},
+                       :template :token}}}}

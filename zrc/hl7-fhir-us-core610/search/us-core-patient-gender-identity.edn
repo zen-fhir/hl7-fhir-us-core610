@@ -1,0 +1,15 @@
+{ns hl7-fhir-us-core610.search.us-core-patient-gender-identity,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-patient-gender-identity",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-patient-gender-identity",
+         :fhir/type "token",
+         :name "gender-identity",
+         :expr {:Patient {:knife [["extension"
+                                   {:url "http://hl7.org/fhir/us/core/StructureDefinition/us-core-genderIdentity"}
+                                   "value"
+                                   "coding"
+                                   "code"]],
+                          :jsonpath ["$.\"extension\"?(@.\"url\"==\"http://hl7.org/fhir/us/core/StructureDefinition/us-core-genderIdentity\").\"value\".\"coding\".\"code\"[*]"],
+                          :data-types #{},
+                          :template :token}}}}

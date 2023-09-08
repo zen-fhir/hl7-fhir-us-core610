@@ -1,0 +1,12 @@
+{ns hl7-fhir-us-core610.search.us-core-encounter-location,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-encounter-location",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-encounter-location",
+         :fhir/type "reference",
+         :name "location",
+         :expr {:Encounter {:knife [["location" "location"]],
+                            :jsonpath ["$.\"location\".\"location\"[*]"],
+                            :data-types #{{:type "Reference",
+                                           :polymorphic? false}},
+                            :template :reference}}}}

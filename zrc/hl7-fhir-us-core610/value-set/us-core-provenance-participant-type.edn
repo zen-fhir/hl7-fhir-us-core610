@@ -1,0 +1,18 @@
+{ns hl7-fhir-us-core610.value-set.us-core-provenance-participant-type,
+ import #{zen.fhir},
+ value-set {:zen/tags #{zen.fhir/value-set},
+            :zen/desc "The type of participation a provenance agent played for a given target.",
+            :zen.fhir/version "0.6.32",
+            :fhir/code-systems #{{:fhir/url "http://terminology.hl7.org/CodeSystem/provenance-participant-type",
+                                  :zen.fhir/content :bundled}
+                                 {:fhir/url "http://hl7.org/fhir/us/core/CodeSystem/us-core-provenance-participant-type",
+                                  :zen.fhir/content :bundled}},
+            :uri "http://hl7.org/fhir/us/core/ValueSet/us-core-provenance-participant-type",
+            :version "6.1.0",
+            :ftr {:module "hl7-fhir-us-core610",
+                  :source-url "https://storage.googleapis.com",
+                  :source-type :cloud-storage,
+                  :ftr-path "ftr",
+                  :tag "init",
+                  :validation-index {:type :nippy,
+                                     :file "index.nippy"}}}}

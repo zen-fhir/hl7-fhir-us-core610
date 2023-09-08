@@ -1,0 +1,95 @@
+{ns hl7-fhir-us-core610.us-core-encounter,
+ import #{hl7-fhir-r4-core.Observation
+          hl7-fhir-us-core610.us-core-relatedperson
+          hl7-fhir-us-core610.value-set.us-core-encounter-type
+          hl7-fhir-r4-core.ImmunizationRecommendation
+          zen.fhir
+          hl7-fhir-us-core610.us-core-condition-encounter-diagnosis
+          hl7-fhir-us-core610.us-core-condition-problems-health-concerns
+          hl7-fhir-us-core610.us-core-practitioner
+          hl7-fhir-us-core610.us-core-organization
+          hl7-fhir-us-core610.value-set.us-core-discharge-disposition
+          hl7-fhir-r4-core.Encounter
+          hl7-fhir-us-core610.us-core-procedure
+          hl7-fhir-us-core610.us-core-practitionerrole
+          hl7-fhir-us-core610.us-core-patient},
+ schema {:zen.fhir/version "0.6.32",
+         :confirms #{zen.fhir/Resource
+                     hl7-fhir-r4-core.Encounter/schema},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter",
+         :require #{:type :subject},
+         :type zen/map,
+         :zen/desc "This profile sets minimum expectations for the Encounter resource to record, search, and fetch basic encounter information for an individual patient to promote interoperability and adoption through common implementation.  It identifies which core elements, extensions, vocabularies, and value sets **SHALL** be present in the resource and constrains the way the elements are used when using this profile.  It provides the floor for standards development for specific use cases.",
+         :keys {:serviceProvider {:fhir/flags #{:MS},
+                                  :confirms #{zen.fhir/Reference},
+                                  :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-organization/schema}},
+                                  :zen/desc "(USCDI) The organization (facility) responsible for this encounter"},
+                :reasonCode {:type zen/vector,
+                             :every {:fhir/flags #{:MS},
+                                     :zen/desc "(USCDI) Coded reason the encounter takes place"}},
+                :type {:type zen/vector,
+                       :every {:fhir/flags #{:MS},
+                               :zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.us-core-encounter-type/value-set,
+                                                    :strength :extensible},
+                               :zen/desc "(USCDI) Specific type of encounter"},
+                       :minItems 1},
+                :participant {:type zen/vector,
+                              :every {:type zen/map,
+                                      :keys {:type {:type zen/vector,
+                                                    :every {:fhir/flags #{:MS},
+                                                            :zen/desc "(USCDI) Role of participant in encounter"}},
+                                             :period {:fhir/flags #{:MS},
+                                                      :zen/desc "(USCDI) Period of time during the encounter that the participant participated"},
+                                             :individual {:fhir/flags #{:MS},
+                                                          :confirms #{zen.fhir/Reference},
+                                                          :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-practitioner/schema
+                                                                                         hl7-fhir-us-core610.us-core-relatedperson/schema
+                                                                                         hl7-fhir-us-core610.us-core-practitionerrole/schema}},
+                                                          :zen/desc "(USCDI) Persons involved in the encounter other than the patient"}},
+                                      :fhir/flags #{:MS},
+                                      :zen/desc "(USCDI) List of participants involved in the encounter"}},
+                :status {:fhir/flags #{:MS},
+                         :zen/desc "(USCDI) planned | arrived | triaged | in-progress | onleave | finished | cancelled +"},
+                :class {:fhir/flags #{:MS},
+                        :zen/desc "(USCDI) Classification of patient encounter"},
+                :identifier {:type zen/vector,
+                             :every {:type zen/map,
+                                     :keys {:system {:fhir/flags #{:MS},
+                                                     :zen/desc "(USCDI) The namespace for the identifier value"},
+                                            :value {:fhir/flags #{:MS},
+                                                    :zen/desc "(USCDI) The value that is unique"}},
+                                     :require #{:system :value},
+                                     :fhir/flags #{:MS},
+                                     :zen/desc "(USCDI) Identifier(s) by which this encounter is known"}},
+                :hospitalization {:type zen/map,
+                                  :keys {:dischargeDisposition {:fhir/flags #{:MS},
+                                                                :zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.us-core-discharge-disposition/value-set,
+                                                                                     :strength :preferred},
+                                                                :zen/desc "(USCDI) Category or kind of location after discharge"}},
+                                  :fhir/flags #{:MS},
+                                  :zen/desc "(USCDI) Details about the admission to a healthcare service"},
+                :period {:fhir/flags #{:MS},
+                         :zen/desc "(USCDI) The start and end time of the encounter"},
+                :location {:type zen/vector,
+                           :every {:type zen/map,
+                                   :keys {:location {:fhir/flags #{:MS},
+                                                     :confirms #{zen.fhir/Reference},
+                                                     :zen.fhir/reference {:refers #{}},
+                                                     :zen/desc "(USCDI) Location the encounter takes place"}},
+                                   :fhir/flags #{:MS},
+                                   :zen/desc "(USCDI) List of locations where the patient has been"}},
+                :subject {:fhir/flags #{:MS},
+                          :confirms #{zen.fhir/Reference},
+                          :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-patient/schema}},
+                          :zen/desc "(USCDI) The patient or group present at the encounter"},
+                :reasonReference {:type zen/vector,
+                                  :every {:fhir/flags #{:MS},
+                                          :confirms #{zen.fhir/Reference},
+                                          :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-condition-problems-health-concerns/schema
+                                                                         hl7-fhir-r4-core.Observation/schema
+                                                                         hl7-fhir-us-core610.us-core-condition-encounter-diagnosis/schema
+                                                                         hl7-fhir-r4-core.ImmunizationRecommendation/schema
+                                                                         hl7-fhir-us-core610.us-core-procedure/schema}},
+                                          :zen/desc "(USCDI) Reason the encounter takes place (reference)"}}},
+         :zen.fhir/type "Encounter"}}

@@ -1,0 +1,51 @@
+{ns hl7-fhir-us-core610.us-core-observation-clinical-result,
+ import #{hl7-fhir-r4-core.Observation
+          zen.fhir
+          hl7-fhir-us-core610.us-core-patient},
+ schema {:zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.Observation/schema
+                     zen.fhir/Resource},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-clinical-result",
+         :require #{:category :subject},
+         :type zen/map,
+         :zen/desc "The US Core Observation Clinical Result Profile is based upon the core FHIR Observation Resource and, along with the US Core DiagnosticReport Profile, meets the US Core Data for Interoperability (USCDI) requirements for *Diagnostic Imaging* and *Clinical Tests* Data Classes. This profile sets minimum expectations for the Observation resource to record and search non-laboratory clinical test results (e.g., radiology and other clinical observations generated from procedures). An example would be when a gastroenterologist reports the size of a polyp observed during a colonoscopy. This profile is the basis for the US Core Laboratory Result Observation Profile, which defines additional data elements to record and search laboratory test results.\n\nThe US Core Observation Clinical Result Profile sets minimum expectations to promote interoperability and adoption through common implementation. It identifies which core elements, extensions, vocabularies, and value sets **SHALL** be present in the resource and constrains the way the elements are used when using this profile. It provides the floor for standards development for specific use cases.",
+         :keys {:status {:fhir/flags #{:MS},
+                         :zen/desc "(USCDI) registered | preliminary | final | amended +"},
+                :category {:type zen/vector,
+                           :slicing {:slices {}},
+                           :every {:fhir/flags #{:MS},
+                                   :zen/desc "(USCDI) Classification of  type of observation"},
+                           :minItems 1},
+                :code {:fhir/flags #{:MS},
+                       :zen/desc "(USCDI) Clinical Test or Procedure Name"},
+                :subject {:fhir/flags #{:MS},
+                          :confirms #{zen.fhir/Reference},
+                          :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-patient/schema}},
+                          :zen/desc "(USCDI) Who and/or what the observation is about"},
+                :effective {:fhir/polymorphic true,
+                            :type zen/map,
+                            :exclusive-keys #{#{:instant
+                                                :dateTime
+                                                :Period
+                                                :Timing}},
+                            :fhir/flags #{:MS},
+                            :zen/desc "(USCDI) Clinically relevant time/time-period for observation"},
+                :value {:fhir/polymorphic true,
+                        :type zen/map,
+                        :exclusive-keys #{#{:time
+                                            :SampledData
+                                            :string
+                                            :dateTime
+                                            :Range
+                                            :integer
+                                            :Ratio
+                                            :Period
+                                            :CodeableConcept
+                                            :Quantity
+                                            :boolean}},
+                        :fhir/flags #{:MS},
+                        :zen/desc "(USCDI) Result Value"},
+                :dataAbsentReason {:fhir/flags #{:MS},
+                                   :zen/desc "(USCDI) Why the result is missing"}},
+         :zen.fhir/type "Observation"}}

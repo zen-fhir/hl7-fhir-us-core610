@@ -1,0 +1,12 @@
+{ns hl7-fhir-us-core610.search.us-core-observation-category,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-observation-category",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-observation-category",
+         :fhir/type "token",
+         :name "category",
+         :expr {:Observation {:knife [["category"]],
+                              :jsonpath ["$.\"category\"[*]"],
+                              :data-types #{{:type "CodeableConcept",
+                                             :polymorphic? false}},
+                              :template :token}}}}

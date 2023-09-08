@@ -1,0 +1,12 @@
+{ns hl7-fhir-us-core610.search.us-core-device-type,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-device-type",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-device-type",
+         :fhir/type "token",
+         :name "type",
+         :expr {:Device {:knife [["type"]],
+                         :jsonpath ["$.\"type\"[*]"],
+                         :data-types #{{:type "CodeableConcept",
+                                        :polymorphic? false}},
+                         :template :token}}}}

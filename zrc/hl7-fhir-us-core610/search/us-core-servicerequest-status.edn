@@ -1,0 +1,12 @@
+{ns hl7-fhir-us-core610.search.us-core-servicerequest-status,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-servicerequest-status",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-servicerequest-status",
+         :fhir/type "token",
+         :name "status",
+         :expr {:ServiceRequest {:knife [["status"]],
+                                 :jsonpath ["$.\"status\"[*]"],
+                                 :data-types #{{:type "code",
+                                                :polymorphic? false}},
+                                 :template :token}}}}

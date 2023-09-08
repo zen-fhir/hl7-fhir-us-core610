@@ -1,0 +1,24 @@
+{ns hl7-fhir-us-core610.search.us-core-patient-name,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-patient-name",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-patient-name",
+         :fhir/type "string",
+         :name "name",
+         :expr {:Patient {:knife [["name"]],
+                          :jsonpath ["$.\"name\"[*]"],
+                          :data-types #{{:type "HumanName",
+                                         :polymorphic? false}},
+                          :template :string,
+                          :sql {:where [:or
+                                        [:ilike
+                                         [:pg/cast
+                                          [:pg/jsonb-path-query-array
+                                           [:pg/sql
+                                            "{{table}}.resource"]
+                                           [:pg/cast
+                                            "($.\"name\"[*]).** ? (@.type() == \"string\")"
+                                            :jsonpath]]
+                                          :text]
+                                         [:pg/sql "{{param}}"]]],
+                                :parameter-format "%\"?%"}}}}}

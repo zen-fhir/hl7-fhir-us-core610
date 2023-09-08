@@ -1,0 +1,12 @@
+{ns hl7-fhir-us-core610.search.us-core-documentreference-status,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-documentreference-status",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-documentreference-status",
+         :fhir/type "token",
+         :name "status",
+         :expr {:DocumentReference {:knife [["status"]],
+                                    :jsonpath ["$.\"status\"[*]"],
+                                    :data-types #{{:type "code",
+                                                   :polymorphic? false}},
+                                    :template :token}}}}

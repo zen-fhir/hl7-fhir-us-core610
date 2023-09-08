@@ -1,0 +1,11 @@
+{ns hl7-fhir-us-core610.search.us-core-documentreference-id,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-documentreference-id",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-documentreference-id",
+         :fhir/type "token",
+         :name "_id",
+         :expr {:DocumentReference {:knife [["id"]],
+                                    :jsonpath ["$.\"id\"[*]"],
+                                    :data-types #{},
+                                    :template :token}}}}

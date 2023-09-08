@@ -1,0 +1,13 @@
+{ns hl7-fhir-us-core610.search.us-core-encounter-discharge-disposition,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-encounter-discharge-disposition",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-encounter-discharge-disposition",
+         :fhir/type "token",
+         :name "discharge-disposition",
+         :expr {:Encounter {:knife [["hospitalization"
+                                     "dischargeDisposition"]],
+                            :jsonpath ["$.\"hospitalization\".\"dischargeDisposition\"[*]"],
+                            :data-types #{{:type "CodeableConcept",
+                                           :polymorphic? false}},
+                            :template :token}}}}

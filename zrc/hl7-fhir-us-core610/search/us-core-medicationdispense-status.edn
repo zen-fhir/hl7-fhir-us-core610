@@ -1,0 +1,12 @@
+{ns hl7-fhir-us-core610.search.us-core-medicationdispense-status,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-medicationdispense-status",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-medicationdispense-status",
+         :fhir/type "token",
+         :name "status",
+         :expr {:MedicationDispense {:knife [["status"]],
+                                     :jsonpath ["$.\"status\"[*]"],
+                                     :data-types #{{:type "code",
+                                                    :polymorphic? false}},
+                                     :template :token}}}}

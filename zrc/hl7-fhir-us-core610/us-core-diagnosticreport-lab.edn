@@ -1,0 +1,62 @@
+{ns hl7-fhir-us-core610.us-core-diagnosticreport-lab,
+ import #{zen.fhir
+          hl7-fhir-r4-core.DiagnosticReport
+          hl7-fhir-us-core610.value-set.us-core-laboratory-test-codes
+          hl7-fhir-us-core610.us-core-careteam
+          hl7-fhir-us-core610.us-core-practitioner
+          hl7-fhir-us-core610.us-core-organization
+          hl7-fhir-r4-core.value-set.diagnostic-report-status
+          hl7-fhir-us-core610.us-core-observation-lab
+          hl7-fhir-us-core610.us-core-practitionerrole
+          hl7-fhir-us-core610.us-core-patient},
+ schema {:zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.DiagnosticReport/schema
+                     zen.fhir/Resource},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-lab",
+         :require #{:category :subject},
+         :type zen/map,
+         :zen/desc "Laboratory results are grouped and summarized using the DiagnosticReport resource which typically reference Observation resource(s).  Each Observation resource represents an individual laboratory test and result value or component result values, or a nested panel (such as a microbial susceptibility panel) which references other observations.  They can also be presented in report form or as free text.  This profile sets minimum expectations for the DiagnosticReport resource to record, search, and fetch laboratory results associated with a patient to promote interoperability and adoption through common implementation.  It identifies which core elements, extensions, vocabularies, and value sets **SHALL** be present in the resource and constrains the way the elements are used when using this profile. It provides the floor for standards development for specific use cases.",
+         :keys {:category {:type zen/vector,
+                           :slicing {:slices {"LaboratorySlice" {:schema {:type zen/vector,
+                                                                          :minItems 1,
+                                                                          :maxItems 1},
+                                                                 :filter {:engine :match,
+                                                                          :match {:coding #{{:system "http://terminology.hl7.org/CodeSystem/v2-0074",
+                                                                                             :code "LAB"}}}}}}},
+                           :every {:fhir/flags #{:MS},
+                                   :zen/desc "(USCDI) Service category"},
+                           :minItems 1},
+                :status {:fhir/flags #{:MS},
+                         :zen.fhir/value-set {:symbol hl7-fhir-r4-core.value-set.diagnostic-report-status/value-set,
+                                              :strength :required},
+                         :zen/desc "(USCDI) registered | partial | preliminary | final +"},
+                :result {:type zen/vector,
+                         :every {:fhir/flags #{:MS},
+                                 :confirms #{zen.fhir/Reference},
+                                 :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-observation-lab/schema}},
+                                 :zen/desc "(USCDI) Observations"}},
+                :effective {:fhir/polymorphic true,
+                            :type zen/map,
+                            :exclusive-keys #{#{:dateTime :Period}},
+                            :fhir/flags #{:MS},
+                            :zen/desc "(USCDI) Diagnostically relevant time (typically the time of specimen collection)"},
+                :code {:fhir/flags #{:MS},
+                       :zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.us-core-laboratory-test-codes/value-set,
+                                            :strength :extensible},
+                       :zen/desc "(USCDI) US Core Laboratory Report Order Code"},
+                :issued {:fhir/flags #{:MS},
+                         :zen/desc "(USCDI) When the report was released"},
+                :subject {:fhir/flags #{:MS},
+                          :confirms #{zen.fhir/Reference},
+                          :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-patient/schema}},
+                          :zen/desc "(USCDI) The subject of the report - usually, but not always, the patient"},
+                :performer {:type zen/vector,
+                            :every {:fhir/flags #{:MS},
+                                    :confirms #{zen.fhir/Reference},
+                                    :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-practitioner/schema
+                                                                   hl7-fhir-us-core610.us-core-careteam/schema
+                                                                   hl7-fhir-us-core610.us-core-practitionerrole/schema
+                                                                   hl7-fhir-us-core610.us-core-organization/schema}},
+                                    :zen/desc "(USCDI) Responsible Diagnostic Service"}}},
+         :zen.fhir/type "DiagnosticReport"}}

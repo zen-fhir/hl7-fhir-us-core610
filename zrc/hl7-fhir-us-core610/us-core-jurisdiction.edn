@@ -1,0 +1,14 @@
+{ns hl7-fhir-us-core610.us-core-jurisdiction,
+ import #{hl7-fhir-us-core610.value-set.us-core-usps-state
+          zen.fhir
+          hl7-fhir-r4-core.CodeableConcept},
+ schema {:zen/tags #{zen.fhir/extension
+                     zen/schema
+                     zen.fhir/structure-schema},
+         :zen/desc "An extension to communicate the US state or local jurisdiction for an element. For example, a practitioner's state or local jurisdiction for a license or identifier.",
+         :zen.fhir/type "CodeableConcept",
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-jurisdiction",
+         :zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.CodeableConcept/schema},
+         :zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.us-core-usps-state/value-set,
+                              :strength :extensible}}}

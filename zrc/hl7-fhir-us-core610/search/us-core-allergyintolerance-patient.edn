@@ -1,0 +1,12 @@
+{ns hl7-fhir-us-core610.search.us-core-allergyintolerance-patient,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-allergyintolerance-patient",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-allergyintolerance-patient",
+         :fhir/type "reference",
+         :name "patient",
+         :expr {:AllergyIntolerance {:knife [["patient"]],
+                                     :jsonpath ["$.\"patient\"[*]"],
+                                     :data-types #{{:type "Reference",
+                                                    :polymorphic? false}},
+                                     :template :reference}}}}

@@ -1,0 +1,12 @@
+{ns hl7-fhir-us-core610.search.us-core-patient-identifier,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-patient-identifier",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-patient-identifier",
+         :fhir/type "token",
+         :name "identifier",
+         :expr {:Patient {:knife [["identifier"]],
+                          :jsonpath ["$.\"identifier\"[*]"],
+                          :data-types #{{:type "Identifier",
+                                         :polymorphic? false}},
+                          :template :token}}}}

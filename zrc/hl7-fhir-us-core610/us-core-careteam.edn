@@ -1,0 +1,50 @@
+{ns hl7-fhir-us-core610.us-core-careteam,
+ import #{hl7-fhir-r4-core.CareTeam
+          hl7-fhir-us-core610.us-core-relatedperson
+          hl7-fhir-r4-core.value-set.care-team-status
+          zen.fhir
+          us-nlm-vsac.value-set.2.16.840.1.113762.1.4.1099.30
+          hl7-fhir-us-core610.us-core-careteam
+          hl7-fhir-us-core610.us-core-practitioner
+          hl7-fhir-us-core610.us-core-organization
+          hl7-fhir-us-core610.us-core-practitionerrole
+          hl7-fhir-us-core610.us-core-patient},
+ schema {:zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.CareTeam/schema
+                     zen.fhir/Resource},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-careteam",
+         :require #{:participant :subject},
+         :type zen/map,
+         :zen/desc "This profile sets minimum expectations for the CareTeam resource for identifying the Care Team members associated with a patient to promote interoperability and adoption through common implementation.  It identifies which core elements, extensions, vocabularies, and value sets **SHALL** be present in the resource and constrains the way the elements are used when using this profile. It provides the floor for standards development for specific use cases.",
+         :keys {:status {:fhir/flags #{:MS},
+                         :zen.fhir/value-set {:symbol hl7-fhir-r4-core.value-set.care-team-status/value-set,
+                                              :strength :required},
+                         :zen/desc "(USCDI) proposed | active | suspended | inactive | entered-in-error"},
+                :subject {:fhir/flags #{:MS},
+                          :confirms #{zen.fhir/Reference},
+                          :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-patient/schema}},
+                          :zen/desc "(USCDI) Who care team is for"},
+                :participant {:type zen/vector,
+                              :every {:type zen/map,
+                                      :keys {:role {:type zen/vector,
+                                                    :every {:fhir/flags #{:MS},
+                                                            :zen.fhir/value-set {:symbol us-nlm-vsac.value-set.2.16.840.1.113762.1.4.1099.30/value-set,
+                                                                                 :strength :extensible},
+                                                            :zen/desc "(USCDI) Type of involvement"},
+                                                    :minItems 1,
+                                                    :maxItems 1},
+                                             :member {:fhir/flags #{:MS},
+                                                      :confirms #{zen.fhir/Reference},
+                                                      :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-practitioner/schema
+                                                                                     hl7-fhir-us-core610.us-core-relatedperson/schema
+                                                                                     hl7-fhir-us-core610.us-core-patient/schema
+                                                                                     hl7-fhir-us-core610.us-core-careteam/schema
+                                                                                     hl7-fhir-us-core610.us-core-practitionerrole/schema
+                                                                                     hl7-fhir-us-core610.us-core-organization/schema}},
+                                                      :zen/desc "(USCDI) Who is involved"}},
+                                      :require #{:role :member},
+                                      :fhir/flags #{:MS},
+                                      :zen/desc "(USCDI) Members of the team"},
+                              :minItems 1}},
+         :zen.fhir/type "CareTeam"}}

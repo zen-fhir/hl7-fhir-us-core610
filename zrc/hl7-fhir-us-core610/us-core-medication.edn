@@ -1,0 +1,17 @@
+{ns hl7-fhir-us-core610.us-core-medication,
+ import #{zen.fhir
+          us-nlm-vsac.value-set.2.16.840.1.113762.1.4.1010.4
+          hl7-fhir-r4-core.Medication},
+ schema {:zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.Medication/schema
+                     zen.fhir/Resource},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medication",
+         :require #{:code},
+         :type zen/map,
+         :zen/desc "When referencing a medication, the MedicationRequest resource can either use a code or refer to a Medication resource.  This profile sets minimum expectations for the Medication resource to record, search, and fetch medications associated with a patient to promote interoperability and adoption through common implementation.  It identifies which core elements, extensions, vocabularies, and value sets **SHALL** be present in the resource and constrains the way the elements are used when using this profile.  It provides the floor for standards development for specific use cases",
+         :keys {:code {:fhir/flags #{:MS},
+                       :zen.fhir/value-set {:symbol us-nlm-vsac.value-set.2.16.840.1.113762.1.4.1010.4/value-set,
+                                            :strength :extensible},
+                       :zen/desc "(USCDI) Codes that identify this medication"}},
+         :zen.fhir/type "Medication"}}

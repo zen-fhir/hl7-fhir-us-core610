@@ -1,0 +1,111 @@
+{ns hl7-fhir-us-core610.us-core-medicationrequest,
+ import #{hl7-fhir-r4-core.Device
+          hl7-fhir-us-core610.us-core-relatedperson
+          zen.fhir
+          us-nlm-vsac.value-set.2.16.840.1.113762.1.4.1010.4
+          hl7-fhir-us-core610.us-core-encounter
+          hl7-fhir-r4-core.value-set.ucum-common
+          hl7-fhir-r4-core.MedicationRequest
+          hl7-fhir-us-core610.us-core-practitioner
+          hl7-fhir-us-core610.us-core-organization
+          hl7-fhir-us-core610.value-set.us-core-condition-code
+          hl7-fhir-r4-core.value-set.medicationrequest-intent
+          hl7-fhir-us-core610.us-core-medication
+          hl7-fhir-us-core610.us-core-practitionerrole
+          hl7-fhir-us-core610.us-core-patient
+          hl7-fhir-r4-core.value-set.medicationrequest-status},
+ schema {:zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen/desc "The US Core Medication Request Profile is based upon the core FHIR MedicationRequest Resource and meets the U.S. Core Data for Interoperability (USCDI) v2 *Medications* requirements. The MedicationRequest resource can be used to record a patient's medication prescription or order.  This profile sets minimum expectations for the MedicationRequest resource to record, search, and fetch a patient's medication to promote interoperability and adoption through common implementation.  It identifies which core elements, extensions, vocabularies, and value sets **SHALL** be present in the resource and constrains the way the elements are used when using this profile.  It provides the floor for standards development for specific use cases.",
+         :zen.fhir/type "MedicationRequest",
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationrequest",
+         :zen.fhir/version "0.6.32",
+         :confirms #{zen.fhir/Resource
+                     hl7-fhir-r4-core.MedicationRequest/schema},
+         :type zen/map,
+         :keys {:category {:type zen/vector,
+                           :slicing {:slices {}},
+                           :every {:fhir/flags #{:MS},
+                                   :zen/desc "(USCDI) Type of medication usage"}},
+                :encounter {:fhir/flags #{:MS},
+                            :confirms #{zen.fhir/Reference},
+                            :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-encounter/schema}},
+                            :zen/desc "(USCDI) Encounter created as part of encounter/admission/stay"},
+                :dispenseRequest {:type zen/map,
+                                  :keys {:numberOfRepeatsAllowed {:fhir/flags #{:MS},
+                                                                  :zen/desc "(USCDI) Number of refills authorized"},
+                                         :quantity {:fhir/flags #{:MS},
+                                                    :zen/desc "(USCDI) Amount of medication to supply per dispense"}},
+                                  :fhir/flags #{:MS},
+                                  :zen/desc "(USCDI) Medication supply authorization"},
+                :reported {:fhir/polymorphic true,
+                           :type zen/map,
+                           :exclusive-keys #{#{:boolean :Reference}},
+                           :keys {:Reference {:confirms #{zen.fhir/Reference},
+                                              :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-practitioner/schema
+                                                                             hl7-fhir-us-core610.us-core-relatedperson/schema
+                                                                             hl7-fhir-us-core610.us-core-patient/schema
+                                                                             hl7-fhir-us-core610.us-core-practitionerrole/schema
+                                                                             hl7-fhir-us-core610.us-core-organization/schema}}}},
+                           :fhir/flags #{:MS},
+                           :zen/desc "(USCDI) Reported rather than primary record"},
+                :reasonCode {:type zen/vector,
+                             :every {:zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.us-core-condition-code/value-set,
+                                                          :strength :extensible},
+                                     :zen/desc "(USCDI) Reason or indication for ordering or not ordering the medication"}},
+                :authoredOn {:fhir/flags #{:MS},
+                             :zen/desc "(USCDI) When request was initially authored"},
+                :requester {:fhir/flags #{:MS},
+                            :confirms #{zen.fhir/Reference},
+                            :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-practitioner/schema
+                                                           hl7-fhir-us-core610.us-core-relatedperson/schema
+                                                           hl7-fhir-r4-core.Device/schema
+                                                           hl7-fhir-us-core610.us-core-patient/schema
+                                                           hl7-fhir-us-core610.us-core-practitionerrole/schema
+                                                           hl7-fhir-us-core610.us-core-organization/schema}},
+                            :zen/desc "(USCDI) Who/What requested the Request"},
+                :status {:fhir/flags #{:MS},
+                         :zen.fhir/value-set {:symbol hl7-fhir-r4-core.value-set.medicationrequest-status/value-set,
+                                              :strength :required},
+                         :zen/desc "(USCDI) active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown"},
+                :dosageInstruction {:type zen/vector,
+                                    :every {:type zen/map,
+                                            :keys {:text {:fhir/flags #{:MS},
+                                                          :zen/desc "(USCDI) Free text dosage instructions e.g. SIG"},
+                                                   :timing {:fhir/flags #{:MS},
+                                                            :zen/desc "(USCDI) When medication should be administered"},
+                                                   :doseAndRate {:type zen/vector,
+                                                                 :every {:type zen/map,
+                                                                         :keys {:dose {:fhir/polymorphic true,
+                                                                                       :type zen/map,
+                                                                                       :exclusive-keys #{#{:Range
+                                                                                                           :Quantity}},
+                                                                                       :fhir/flags #{:MS},
+                                                                                       :zen.fhir/value-set {:symbol hl7-fhir-r4-core.value-set.ucum-common/value-set,
+                                                                                                            :strength :preferred},
+                                                                                       :zen/desc "(USCDI) Amount of medication per dose"}},
+                                                                         :fhir/flags #{:MS},
+                                                                         :zen/desc "(USCDI) Amount of medication administered"}}},
+                                            :fhir/flags #{:MS},
+                                            :zen/desc "(USCDI) How the medication should be taken"}},
+                :intent {:fhir/flags #{:MS},
+                         :zen.fhir/value-set {:symbol hl7-fhir-r4-core.value-set.medicationrequest-intent/value-set,
+                                              :strength :required},
+                         :zen/desc "(USCDI) proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option"},
+                :subject {:fhir/flags #{:MS},
+                          :confirms #{zen.fhir/Reference},
+                          :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-patient/schema}},
+                          :zen/desc "(USCDI) Who or group medication request is for"},
+                :medication {:fhir/polymorphic true,
+                             :type zen/map,
+                             :exclusive-keys #{#{:CodeableConcept
+                                                 :Reference}},
+                             :keys {:Reference {:confirms #{zen.fhir/Reference},
+                                                :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-medication/schema}}}},
+                             :fhir/flags #{:MS},
+                             :zen.fhir/value-set {:symbol us-nlm-vsac.value-set.2.16.840.1.113762.1.4.1010.4/value-set,
+                                                  :strength :extensible},
+                             :zen/desc "(USCDI) Medication to be taken"},
+                :reasonReference {:type zen/vector,
+                                  :every {:confirms #{zen.fhir/Reference},
+                                          :zen.fhir/reference {:refers #{}},
+                                          :zen/desc "(USCDI) US Core Condition or Observation that supports the prescription"}}}}}

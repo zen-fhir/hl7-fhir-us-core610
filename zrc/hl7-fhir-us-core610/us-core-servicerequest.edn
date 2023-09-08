@@ -1,0 +1,62 @@
+{ns hl7-fhir-us-core610.us-core-servicerequest,
+ import #{hl7-fhir-r4-core.Device
+          hl7-fhir-us-core610.us-core-relatedperson
+          zen.fhir
+          hl7-fhir-us-core610.value-set.us-core-procedure-code
+          hl7-fhir-r4-core.PractitionerRole
+          hl7-fhir-us-core610.us-core-practitioner
+          hl7-fhir-us-core610.us-core-organization
+          hl7-fhir-us-core610.value-set.us-core-condition-code
+          hl7-fhir-r4-core.ServiceRequest
+          hl7-fhir-us-core610.us-core-patient},
+ schema {:zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.ServiceRequest/schema
+                     zen.fhir/Resource},
+         :zen/tags #{zen.fhir/profile-schema zen/schema},
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-servicerequest",
+         :require #{:code},
+         :type zen/map,
+         :zen/desc "This profile sets minimum expectations for recording, searching, and fetching the ServiceRequest resource to promote interoperability and adoption through common implementation.  It identifies which core elements, extensions, vocabularies, and value sets **SHALL** be present in the resource and constrains the way the elements are used when using this profile.  It provides the floor for standards development for specific use cases.",
+         :keys {:category {:type zen/vector,
+                           :slicing {:slices {}},
+                           :every {:fhir/flags #{:MS},
+                                   :zen/desc "(USCDI) Classification of service"}},
+                :reasonCode {:type zen/vector,
+                             :every {:zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.us-core-condition-code/value-set,
+                                                          :strength :extensible},
+                                     :zen/desc "(USCDI) Explanation/Justification for procedure or service"}},
+                :authoredOn {:fhir/flags #{:MS},
+                             :zen/desc "(USCDI) Date request signed"},
+                :requester {:fhir/flags #{:MS},
+                            :confirms #{zen.fhir/Reference},
+                            :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-practitioner/schema
+                                                           hl7-fhir-r4-core.PractitionerRole/schema
+                                                           hl7-fhir-us-core610.us-core-relatedperson/schema
+                                                           hl7-fhir-r4-core.Device/schema
+                                                           hl7-fhir-us-core610.us-core-patient/schema
+                                                           hl7-fhir-us-core610.us-core-organization/schema}},
+                            :zen/desc "(USCDI) Who/what is requesting service"},
+                :status {:fhir/flags #{:MS},
+                         :zen/desc "(USCDI) draft | active | on-hold | revoked | completed | entered-in-error | unknown"},
+                :code {:fhir/flags #{:MS},
+                       :zen.fhir/value-set {:symbol hl7-fhir-us-core610.value-set.us-core-procedure-code/value-set,
+                                            :strength :extensible},
+                       :zen/desc "(USCDI) What is being requested/ordered"},
+                :intent {:fhir/flags #{:MS},
+                         :zen/desc "(USCDI) proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option"},
+                :subject {:fhir/flags #{:MS},
+                          :confirms #{zen.fhir/Reference},
+                          :zen.fhir/reference {:refers #{hl7-fhir-us-core610.us-core-patient/schema}},
+                          :zen/desc "(USCDI) Individual or Entity the service is ordered for"},
+                :occurrence {:fhir/polymorphic true,
+                             :type zen/map,
+                             :exclusive-keys #{#{:dateTime
+                                                 :Period
+                                                 :Timing}},
+                             :fhir/flags #{:MS},
+                             :zen/desc "(USCDI) When service should occur"},
+                :reasonReference {:type zen/vector,
+                                  :every {:confirms #{zen.fhir/Reference},
+                                          :zen.fhir/reference {:refers #{}},
+                                          :zen/desc "(USCDI) US Core Profile that supports the requested service"}}},
+         :zen.fhir/type "ServiceRequest"}}

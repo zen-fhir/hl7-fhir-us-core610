@@ -1,0 +1,12 @@
+{ns hl7-fhir-us-core610.search.us-core-practitioner-identifier,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-practitioner-identifier",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-practitioner-identifier",
+         :fhir/type "token",
+         :name "identifier",
+         :expr {:Practitioner {:knife [["identifier"]],
+                               :jsonpath ["$.\"identifier\"[*]"],
+                               :data-types #{{:type "Identifier",
+                                              :polymorphic? false}},
+                               :template :token}}}}

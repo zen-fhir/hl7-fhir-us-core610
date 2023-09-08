@@ -1,0 +1,14 @@
+{ns hl7-fhir-us-core610.us-core-genderIdentity,
+ import #{zen.fhir
+          hl7-fhir-r4-core.CodeableConcept
+          us-nlm-vsac.value-set.2.16.840.1.113762.1.4.1021.32},
+ schema {:zen/tags #{zen.fhir/extension
+                     zen/schema
+                     zen.fhir/structure-schema},
+         :zen/desc "This extension represents an individual's sense of being a man, woman, boy, girl, nonbinary, or something else, ascertained by asking them what that identity is. Systems requiring multiple gender identities and associated dates **SHOULD** use the FHIR R5 [genderIdentity extension](http://hl7.org/fhir/extensions/StructureDefinition-individual-genderIdentity.html). When future versions of US Core are based on FHIR R5, the FHIR R5 extension will supersede this extension.",
+         :zen.fhir/type "CodeableConcept",
+         :zen.fhir/profileUri "http://hl7.org/fhir/us/core/StructureDefinition/us-core-genderIdentity",
+         :zen.fhir/version "0.6.32",
+         :confirms #{hl7-fhir-r4-core.CodeableConcept/schema},
+         :zen.fhir/value-set {:symbol us-nlm-vsac.value-set.2.16.840.1.113762.1.4.1021.32/value-set,
+                              :strength :extensible}}}

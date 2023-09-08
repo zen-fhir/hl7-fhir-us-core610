@@ -1,0 +1,12 @@
+{ns hl7-fhir-us-core610.search.us-core-allergyintolerance-clinical-status,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-allergyintolerance-clinical-status",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-allergyintolerance-clinical-status",
+         :fhir/type "token",
+         :name "clinical-status",
+         :expr {:AllergyIntolerance {:knife [["clinicalStatus"]],
+                                     :jsonpath ["$.\"clinicalStatus\"[*]"],
+                                     :data-types #{{:type "CodeableConcept",
+                                                    :polymorphic? false}},
+                                     :template :token}}}}

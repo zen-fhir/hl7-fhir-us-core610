@@ -1,0 +1,13 @@
+{ns hl7-fhir-us-core610.search.us-core-medicationdispense-patient,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-medicationdispense-patient",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-medicationdispense-patient",
+         :fhir/type "reference",
+         :name "patient",
+         :expr {:MedicationDispense {:knife [["subject"
+                                              {:resourceType "Patient"}]],
+                                     :jsonpath ["$.\"subject\"?(@.\"resourceType\"==\"Patient\")[*]"],
+                                     :data-types #{{:type "Reference",
+                                                    :polymorphic? false}},
+                                     :template :reference}}}}

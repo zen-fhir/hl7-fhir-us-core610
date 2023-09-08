@@ -1,0 +1,12 @@
+{ns hl7-fhir-us-core610.search.us-core-practitionerrole-practitioner,
+ import #{zen.fhir},
+ search {:zen/tags #{zen.fhir/search},
+         :fhir/id "us-core-practitionerrole-practitioner",
+         :fhir/url "http://hl7.org/fhir/us/core/SearchParameter/us-core-practitionerrole-practitioner",
+         :fhir/type "reference",
+         :name "practitioner",
+         :expr {:PractitionerRole {:knife [["practitioner"]],
+                                   :jsonpath ["$.\"practitioner\"[*]"],
+                                   :data-types #{{:type "Reference",
+                                                  :polymorphic? false}},
+                                   :template :reference}}}}
